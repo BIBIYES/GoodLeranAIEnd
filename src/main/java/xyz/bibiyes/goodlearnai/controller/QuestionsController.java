@@ -15,8 +15,8 @@ public class QuestionsController {
     private QuestionsService questionsService;
     // 获取问题的接口
     @GetMapping("/questions")
-    public Result getQuestions(@RequestParam String title){
-        return questionsService.findByTitle(title);
+    public Result getQuestions(@RequestParam(defaultValue = "1") Integer page , @RequestParam(defaultValue = "5") Integer pageSize , @RequestParam String title){
+        return questionsService.findByTitle(page,pageSize,title);
     }
     // 添加题目的接口
     @PostMapping("/questions")

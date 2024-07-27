@@ -15,20 +15,24 @@ public class QuestionsService {
     private QuestionsMapper questionMapper;
 
     // 添加题目
-    public Result<String> addQuestion(Questions question) {
-        // 使用 MyBatis-Plus 的 insert 方法插入数据
-        boolean success = questionMapper.insert(question) > 0;
+    public Result addQuestion(Questions question) {
+        try {
+            // 使用 MyBatis-Plus 的 insert 方法插入数据
+            questionMapper.insert(question);
 
-        if (success) {
             return Result.success("question", "题目添加成功", null);
-        } else {
-            return Result.failure(500, "question", "题目添加失败");
+
+        } catch (Exception e) {
+            return Result.error("question", "题目添加失败");
         }
+
     }
+
     // 模糊查询题目
-    public Result findByTitle(String title) {
-        List<Questions> questions = questionMapper.findByTitle(title);
-        return Result.success("questions","返回题目成功",questions);
+    public Result findByTitle(Integer page, Integer pageSize, String title) {
+        Integer start = ((page - 1) * pageSize);
+        List<Questions> questions = questionMapper.findByTitle(start, pageSize, title);
+        return Result.success("questions", "返回题目成功", questions);
     }
 }
 
