@@ -1,8 +1,11 @@
 package xyz.bibiyes.goodlearnai.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import xyz.bibiyes.goodlearnai.entity.Questions;
-import xyz.bibiyes.goodlearnai.mapper.QuestionsMapper; // 确保导入正确的 Mapper 类
+import xyz.bibiyes.goodlearnai.mapper.QuestionsMapper;
 import xyz.bibiyes.goodlearnai.utils.Result;
 
 import javax.annotation.Resource;
@@ -12,6 +15,7 @@ import java.util.List;
  * @author Mouse Sakura
  */
 @Service
+@Slf4j
 public class QuestionsService {
 
     @Resource
@@ -32,10 +36,23 @@ public class QuestionsService {
     }
 
     // 模糊查询题目
-    public Result findByTitle(Integer page, Integer pageSize, String title) {
-        Integer start = ((page - 1) * pageSize);
-        List<Questions> questions = questionMapper.findByTitle(start, pageSize, title);
-        return Result.success("questions", "返回题目成功", questions);
+    public Result findByTitle(Integer page,Integer pageSize , String title,Integer id) {
+        if (id == null) {
+            // 使用pageHelper分页
+            PageHelper.startPage(page, pageSize);
+            List<Questions> questions = questionMapper.findByTitle(title);
+
+            // 使用 PageInfo 封装查询结果
+            PageInfo<Questions> pageInfo = new PageInfo<>(questions);
+
+            return Result.success("questions", "返回题目成功",pageInfo);
+        }
+        else {
+
+            Questions question = questionMapper.selectById(id);
+            return Result.success("question", "返回题目成功", question);
+        }
+
     }
 
     public Result delById(Integer id) {

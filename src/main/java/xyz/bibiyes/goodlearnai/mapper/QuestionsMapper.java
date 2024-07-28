@@ -14,6 +14,6 @@ import java.util.List;
 @Mapper
 public interface QuestionsMapper extends BaseMapper<Questions> {
     // 模糊查询问题
-    @Select("SELECT * FROM questions WHERE title LIKE CONCAT('%', #{title}, '%') LiMIt #{start},#{pageSize}")
-    List<Questions> findByTitle(@Param("start") Integer start , @Param("pageSize") Integer pageSize , @Param("title") String title);
+    @Select("SELECT * FROM questions WHERE title LIKE CONCAT('%', #{title}, '%')")
+    List<Questions> findByTitle(@Param("title") String title);
 }
