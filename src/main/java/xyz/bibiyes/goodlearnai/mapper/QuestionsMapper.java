@@ -9,7 +9,7 @@ import xyz.bibiyes.goodlearnai.entity.Questions;
 import java.util.List;
 
 /**
- * @author Mouse
+ * @author Mouse Sakura
  */
 @Mapper
 public interface QuestionsMapper extends BaseMapper<Questions> {
