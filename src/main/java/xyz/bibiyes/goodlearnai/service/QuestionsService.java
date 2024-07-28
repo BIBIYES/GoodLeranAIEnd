@@ -11,6 +11,9 @@ import xyz.bibiyes.goodlearnai.utils.Result;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Mouse Sakura
+ */
 @Service
 @Slf4j
 public class QuestionsService {
@@ -50,6 +53,33 @@ public class QuestionsService {
             return Result.success("question", "返回题目成功", question);
         }
 
+    }
+
+    public Result delById(Integer id) {
+        try {
+            int flag = questionMapper.deleteById(id);
+            if (flag >= 1) {
+                return Result.success("questions", "删除成功");
+            }
+
+            return Result.error("questions", "删除失败");
+        } catch (Exception e) {
+            return Result.error("questions", "异常报错");
+        }
+
+    }
+
+    public Result updateById(Questions question) {
+        try{
+            int flag = questionMapper.updateById(question);
+            if (flag >= 1) {
+                return Result.success("questions","更新问题成功");
+            }
+            return Result.error("questions","更新问题失败");
+        }
+        catch (Exception e) {
+            return  Result.error("questions","异常报错");
+        }
     }
 }
 

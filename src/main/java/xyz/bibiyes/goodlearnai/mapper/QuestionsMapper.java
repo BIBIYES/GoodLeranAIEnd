@@ -8,6 +8,9 @@ import xyz.bibiyes.goodlearnai.entity.Questions;
 
 import java.util.List;
 
+/**
+ * @author Mouse
+ */
 @Mapper
 public interface QuestionsMapper extends BaseMapper<Questions> {
     // 模糊查询问题
